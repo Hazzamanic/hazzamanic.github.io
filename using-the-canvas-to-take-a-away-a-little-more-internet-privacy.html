@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Using the canvas to take away a little more internet privacy</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/using-the-canvas-to-take-a-away-a-little-more-internet-privacy?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Jul 28, 2014</div>     
+	
+
+<h1>Using the canvas to take away a little more internet privacy</h1>
+    
+    <p><strong>UPDATE:</strong></p>
+
+<p>You can of course blanket block all this stuff using <a href="https://adblockplus.org">AdBlock</a>, which I was apparently too slow to realise.</p>
+
+<p>Today I read about a novel way of tracking unique users even when they&nbsp;have&nbsp;cookies disabled. Now, we all know there are many ways to track users beyond the standard cookies, generally referred to as evercookies (probably named after this <a href="https://github.com/samyk/evercookie">library </a>created by Samy?), using a wide variety of methods such as Flash objects and various HTML5 storages. However, this slightly different method, which was <a href="http://www.w2spconf.com/2012/papers/w2sp12-final4.pdf">discovered</a> in 2012 by a group researchers, is pretty fucking cool and a slight bit more canny. It collects a bunch of data unique to that user from their computer (operating system etc.), then writes this information onto the browsers canvas. It then instructs the browser to read this image back, generating what is effectively a unique fingerprint. So when a user visits a different site, that same fingerprint can be created and matched to build a profile on that user. I imagine it also does something clever and extracts a unique section of the image generated by the browser to send back to its servers so it doesn't have to store a shitload of data.</p>
+
+<p>So is this being used out in the wild? A group of researchers at KU Leuven and Princeton University have done a massive <a href="https://securehomes.esat.kuleuven.be/~gacar/persistent/index.html">study</a> and discovered that a whopping one in eighteen of the top 100,000 websites are using this technique. And even more astounding, it can all be traced back to a single company: <a href="http://www.addthis.com/">AddThis</a>. Well, we never really suspected them to be a bastion of morality, did we? (I bring up morals here&nbsp;because there is little a user can do to block this kind of tracking, even if they have disabled cookies in an effort not to be tracked).</p>
+
+<p>I say little, you can use Tor browser, which does have functionality to stop this tracking. I do remember seeing it prompt me long ago that the website I was on was trying to read image data from my canvas and having no clue why I should care about that. Ignorance isn't always bliss. However, using Tor browser&nbsp;to look&nbsp;at pictures of cats is a bit of a mission.</p>
+
+<p>So ultimately, what does all this mean? Nothing. Websites are tracking as much as they can about you in as many ways as they can. And can we blame them? Data is money, and most of these sites can only stay in operation because of advertising displayed on their sites. Companies will only pay for adverts if they know that everything possible is being done to target their potential customers.</p>
+
+<p>But regardless of where you stand on privacy on the internet (there is only one place you should stand though really, privacy matters), this is a cool way to destroy internet privacy.</p>
+
+<p>&nbsp;</p>
+
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Privacy">Privacy</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fusing-the-canvas-to-take-a-away-a-little-more-internet-privacy" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="28">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="WXDFvd1CU6wNU868wlJQuoFkYArWe4t4LVTPHWx7EsgL790yrcXi-lNWD8eptrUe-VHDVZwjzOJkaQyy8uU5rqjSkOjSvGTBAFpmpNNc9IY1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"c3124d82d99d44ba8fbe7ed4ed8f7c55"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

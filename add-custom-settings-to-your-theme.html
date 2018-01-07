@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Add Custom Settings to your Theme</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/add-custom-settings-to-your-theme?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Jan 31, 2015</div>     
+	
+
+<h1>Add Custom Settings to your Theme</h1>
+    
+    When building themes in Orchard, it is often desirable to make certain aspects of the theme available to the administrator to customize. 
+This article describes how to add several simple theme settings to the Site Settings menu in the Orchard dashboard. 
+
+#Creating the Theme
+First thing we will need is a theme, so let's go ahead and use the codegen command to generate a theme
+
+    feature enable Orchard.CodeGeneration
+
+Now we can generate a theme that we will base on TheThemeMachine so that we have a basic theme to work on. We will also need to create a project file for this theme so that we can add our settings. This is the key to creating settings in our themes because by making our theme a C# project, our themes can do almost anything a module can do.
+
+    codegen theme CleanBlog /BasedOn:TheThemeMachine /CreateProject:true
+
+#Defining the Settings
+Visual Studio should now prompt you to reload the solution so you can get started with your new theme. If it doesn't right click on your themes folder in the Solution Explorer and Add -&gt; Existing Project then select your new themes project file (it will be located in the Themes folder).
+
+These will be the two settings added to our theme:
+
+- Add a custom class to the main layout element
+- Load a custom style sheet based on the users selection
+
+	
+We are going to attach a new part to the Site content type to store these custom theme settings. So let's create a **Models** folder and add a file called *CleanBlogSettingsPart.cs*.
+
+    using Orchard.ContentManagement;
+    
+    namespace CleanBlog.Models
+    {
+    	public class CleanBlogSettingsPart : ContentPart
+        {
+            public string CustomClass {
+                get { return this.Retrieve(x =&gt; x.CustomClass); }
+                set { this.Store(x =&gt; x.CustomClass, value); }
+            }
+         
+            public string HoverColor {
+                get { return this.Retrieve(x =&gt; x.HoverColor, "custom_blue.css"); }
+                set { this.Store(x =&gt; x.HoverColor, value); }
+            }
+        }
+    }
+
+This example is using the InfoSet storage that was made available in 1.8 (it is perfectly possible to achieve the same in older versions of Orchard using the ContentPartRecord storage method and building the table in the migrations, see *this* for more details). The "custom_blue.css" parameter in the getter for HoverColor is the default value for that setting.
+
+We will be offering them the option to choose from 3 different colours to have their hyperlinks, so let's create three style sheets in the Styles folder of our theme:
+
+- custom_blue.css
+- custom_green.css
+- custom_yellow.css
+
+Add the following to each style sheet and adjust the colour to match the file.
+
+    a:hover {
+        color: *color*;
+    }
+
+So custom_blue.css will look like this:
+
+    a:hover {
+        color: blue;
+    }
+
+
+#Setting up the Editor
+Now we will need an editor to select these options. Create a file in **~/Views/EditorTemplates/Parts** called *CleanBlogSettingsPart.cshtm*. 
+
+    @model CleanBlog.Models.CleanBlogSettingsPart
+               
+    @{
+        var colourScheme = new List<selectlistitem>();
+        colourScheme.Add(new SelectListItem { Text = "Blue", Value = "custom_blue.css" });
+        colourScheme.Add(new SelectListItem { Text = "Green", Value = "custom_green.css" });
+        colourScheme.Add(new SelectListItem { Text = "Yellow", Value = "custom_yellow.css" });
+    }
+    
+    <fieldset>
+        <legend>Clean Blog Settings</legend>
+    	<div>
+    		@Html.LabelFor(m =&gt; m.CustomClass, T("Custom Class"))
+    		@Html.EditorFor(m =&gt; m.CustomClass)
+    	</div>
+    	<div>
+    		@Html.LabelFor(m =&gt; m.HoverColor, T("Hover Color"))
+    		@Html.DropDownListFor(m =&gt; m.HoverColor, colourScheme.AsEnumerable())
+    	</div>
+    </fieldset>
+
+To handle the display of this view and attach the settings to the Site content type, we will use a ContentHandler. So create a folder called **Handlers** in the root of your theme with a file called *CleanBlogSettingsPartHandler.cs*.
+
+using Orchard.ContentManagement.Handlers;
+using Orchard.ContentManagement;
+using Orchard.Localization;
+using CleanBlog.Models;
+
+    namespace CleanBlog.Handlers
+    {
+    	public class CleanBlogSettingsPartHandler : ContentHandler
+        {
+            public CleanBlogSettingsPartHandler() {
+    			Filters.Add(new ActivatingFilter<cleanblogsettingspart>("Site"));
+                Filters.Add(new TemplateFilterForPart<cleanblogsettingspart>("CleanBlogSettingsPart", "Parts/CleanBlogSettingsPart", "Theme"));
+                T = NullLocalizer.Instance;
+            }
+    
+    		public Localizer T { get; set; }
+    
+    		protected override void GetItemMetadata(GetContentItemMetadataContext context) {
+                if (context.ContentItem.ContentType != "Site")
+                    return;
+                base.GetItemMetadata(context);
+                context.Metadata.EditorGroupInfo.Add(new GroupInfo(T("Theme")));
+            }
+        }
+    }
+
+There are a few things of note here. We don't want to just display our themes settings in the main settings menu, but in its own subsection called "Theme". You can name this subsection whatever you like. But if you do want your settings to be in the main settings page, just remove the 'GetItemMetadata()' method and change this line:
+
+    Filters.Add(new TemplateFilterForPart<cleanblogsettingspart>("CleanBlogSettingsPart", "Parts/CleanBlogSettingsPart", "Theme"));
+
+to:
+
+    Filters.Add(new TemplateFilterForPart<cleanblogsettingspart>("CleanBlogSettingsPart", "Parts/CleanBlogSettingsPart"));
+
+You'll also notice that this line is defining what template to use for rendering our settings editor. You may be wondering why we don’t just use a driver like we usually do for a parts editor template. This is due to the fact that to call the **Editor** method of your **Driver** and return a shape, you need to have specified in the Placement.info that you want to do that. Since this theme is not active in the admin section of Orchard, our themes **Placement.info** file is never run hence a Driver would never display anything.
+
+Finally, the line:
+
+    Filters.Add(new ActivatingFilter<cleanblogsettingspart>("Site"));
+
+Is what attaches our part to the Site content type. 
+
+#Accessing the Theme Settings
+All that is left is to do now is to actually make use of our theme settings. Let's copy the *Layout.cshtml* file from TheThemeMachine into our CleanBlog theme. This means our theme will now use our Layout file instead of the base Layout from TheThemeMachine. Accessing our settings is as simple as:
+
+    var settings = WorkContext.CurrentSite.As<cleanblogsettingspart>();
+
+**WorkContext** is effectively an extension of the **HttpContext**, containing additional information about Orchard, such as the current user and current site (which you can see us doing above). This gives us access to the **site content item**, meaning we can access any parts that we have attached to the Site content type. We will need to add two using statements into our view to resolve the .As&lt;&gt; extension and our model.
+
+    @using CleanBlog.Models
+    @using Orchard.ContentManagement
+
+So now we have our settings in the view we can actually make use of them. Anywhere after the line
+
+    Style.Include("Site.css");
+
+add the line
+
+    Style.Include(settings.HoverColor);
+
+This will load the selected stylesheet after the main sheet and apply our overriding colour scheme. Our final setting is to add a custom class to the main div element. This element is generated by the Tag method. This is an implementation of C#'s TagBuilder class. It takes a dynamic shape object and a tag name and builds that tag with all the attributes (id, classes and additional attributes) gleaned from the shape that was passed in. So we can add our class to the Model so our class will be added to the rendered tag like so:
+
+    Model.Classes.Add(settings.CustomClass);
+
+
+#Wrapping Up
+The real power here is that themes in Orchard don't just have to be templates and stylesheets, they can be fully-fledged **projects** that run C# code outside of views; basically do anything a module can do. Here we saw just one way to utilize this power: modify the look and feel of your theme from the dashboard without having to change any **HTML** or **CSS**
+
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>, <a href="/Tags/Orchard%20Themes">Orchard Themes</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fadd-custom-settings-to-your-theme" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="31">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="dzdsuiKwkk0yErv1jGUiHGe2rKA9zV19KK5qEhBlzsgcHbK3UZyKgUsiGtIepjSFqiUuPsFSrFS_QlKQulX2tfq4PoCm_7pPOkZWozCqpy81"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</cleanblogsettingspart></cleanblogsettingspart></cleanblogsettingspart></cleanblogsettingspart></cleanblogsettingspart></cleanblogsettingspart></selectlistitem></article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"ef4bb0edf96b495b83e16ed0e05750f2"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

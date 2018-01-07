@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Modifying Orchard's Host.config file on Publish</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/modifying-orchard-s-host-config-file-on-publish?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Sep 1, 2016</div>     
+	
+
+<h1>Modifying Orchard's Host.config file on Publish</h1>
+    
+    We have been gradually moving things to Azure over the last year, including some of Orchard installations. Orchard plays nice with Azure and setting up Azure services like blob storage to complement your Azure deployment are surprisingly simple. You can use blob settings to store media, but also to store your app_data configuration. To store Orchard's app_data in blob storage you need to make some changes to the Host.config file, however since the solution I work from is also used to deploy to sites that use s3 and just the file system to store app_data, I thought I could make a little transform to handle this. 
+
+Now, I deploy by publishing straight from visual studio so I will be modifying the Orchard.Web project file, but if you use the command line to build your deployment package then you will need to edit the Orchard.proj file. Just add the following ItemGroup element in the Project element, I have mine near the web.config transforms (where I copied all this from!)
+
+    <itemgroup>
+    	<webconfigstotransform include="Config\Host.config">
+    	  <destinationrelativepath>Config\Host.config</destinationrelativepath>
+    	  <exclude>False</exclude>
+    	  <transformfilefolder>$(TransformWebConfigIntermediateLocation)\original</transformfilefolder>
+    	  <transformfile>Config\Host.$(DeploymentTarget).config</transformfile>
+    	  <transformoriginalfolder>$(TransformWebConfigIntermediateLocation)\original</transformoriginalfolder>
+    	  <transformoriginalfile>$(TransformWebConfigIntermediateLocation)\original\%(DestinationRelativePath)</transformoriginalfile>
+    	  <transformoutputfile>$(TransformWebConfigIntermediateLocation)\transformed\%(DestinationRelativePath)</transformoutputfile>
+    	  <transformscope>$(_PackageTempDir)\%(DestinationRelativePath)</transformscope>
+    	  <subtype>Designer</subtype>
+    	</webconfigstotransform>
+    	<none include="Config\Host.Basic.config">
+    	  <dependentupon>Host.config</dependentupon>
+    	</none>
+    	<none include="Config\Host.s3.config">
+    	  <dependentupon>Host.config</dependentupon>
+    	</none>
+    	<none include="Config\Host.Azure.config">
+    	  <dependentupon>Host.config</dependentupon>
+    	</none>
+    </itemgroup>
+
+Easy. It displays in the nice way with the transformer files underneath the basic one within Visual Studio. Sexy. Create your Host.Azure.config file in the Config file with this transform to change the Host.config file on publish.
+
+    <!--?xml version="1.0" encoding="utf-8" ?-->
+    <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+      <autofac defaultassembly="Orchard.Framework">
+        <components>
+          <!-- Configure Orchard to store shell settings in Microsoft Azure Blob Storage. -->
+          <component xdt:transform="Insert" instance-scope="single-instance" type="Orchard.FileSystems.Media.ConfigurationMimeTypeProvider, Orchard.Framework" service="Orchard.FileSystems.Media.IMimeTypeProvider"></component>
+          <component xdt:transform="Insert" instance-scope="single-instance" type="Orchard.Azure.Services.Environment.Configuration.AzureBlobShellSettingsManager, Orchard.Azure" service="Orchard.Environment.Configuration.IShellSettingsManager"></component>
+        </components>
+      </autofac>
+    
+    </configuration>
+
+Or you could just exclude the Host.config from your deployments. But is that as fun?!
+
+As a quick note as to why we store settings in blob storage at all when Azure web apps share the same file system across instances, you cant use deployment slots. Deployment slots allow you upload code to the staging deployment slot, move it to live instantly when changes are verified as good to go. The problem here is that it is a file system swap, so you cant have any application data (media, settings etc.) on the azure file system. I'm currently only running one site (that is only in beta right now) that uses blob storage for setting, but seems to be running okay. Touch wood...
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fmodifying-orchard-s-host-config-file-on-publish" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="56">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="LG4sLJNviXSYzbkw8ZdenCfrC0tns-f96XEu0eEOagSHAF7QMWu4SmWf1tzDyNR_P9XqKfUn8s_yfT6XCkgQGHVtzSemY0zDbH0EMerV3a81"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"e810a86850d44601b79ea2fa1c67f401"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

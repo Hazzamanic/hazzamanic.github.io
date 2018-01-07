@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Using Placement.info to specify alternates</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/using-placement-info-to-specify-alternates?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Jul 22, 2014</div>     
+	
+
+<h1>Using Placement.info to specify alternates</h1>
+    
+    <p>A little used feature of Orchard's Placement.info is the ability to define custom alternates to be used within it.</p>
+
+<p>A previous developer at my company needed a part to be formatted slightly differently based on the DisplayType. To this end he wrote a class that generated alternates for parts based on the current DisplayType. This may have seemed like a good idea at the time but in practise, it generates a huge number of useless alternates that will only be of use in one scenario, which does not seem particularly efficient. The simpler solution would have been to use the placement file.</p>
+
+<p>Within your &lt;place&gt; tags you can add extra arguments after the standard location and priority. So let's take a look at what this would look like.</p>
+
+<pre>&lt;Match ContentType="Page"&gt;
+  &lt;Place Parts_Title="Header:1"/&gt;
+  &lt;Match DisplayType="Detail"&gt;
+    &lt;Place Parts_Title="/PageTitle:3;Alternate=Parts_Title__Detail"/&gt;
+  &lt;/Match&gt;
+&lt;/Match&gt;</pre>
+
+<p>So as you can see, when we match a content type of "Page" and a display type of "Detail", we will offer an alternate of Parts_Title__Detail, which we can create in our theme, either manually or via Shape Tracing.</p>
+
+<p><img alt="Shape Tracing Image" src="/Media/blog/Images/ShapeTracing.png"></p>
+
+<p>As you can see, the alternates corresponding file name is <var>Parts.Title-Detail.cshtml</var>, one underscore (_) becomes a dot (.) and two underscores (__) becomes a dash (-). Another interesting thing to note is the use of the forward slash (/) in front of PageTitle in this line:</p>
+
+<pre> &lt;Place Parts_Title="/PageTitle:3;Alternate=Parts_Title__Detail"/&gt;</pre>
+
+<p>PageTitle is a custom zone I have defined in my <var>Layout.cshtml</var> (and added to the list of zones in the Module.txt!)</p>
+
+<pre>    @if (Model.PageTitle != null) {
+        &lt;header id="page-title"&gt;
+            &lt;div class="container"&gt;
+                @Zone(Model.PageTitle)
+            &lt;/div&gt;
+        &lt;/header&gt;
+    }</pre>
+
+<p>So using the forward slash (/) pushes parts into Layout Zones, not in Content Zones, which can come in pretty handy.</p>
+
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>, <a href="/Tags/Orchard%20Themes">Orchard Themes</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fusing-placement-info-to-specify-alternates" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="26">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="6hj6x_bk6qcaMQkaShVpGpRYQwOddVunu4iaK2mSonUezg4HjSbiW9GhSDkmCwNYDm2ez4a7ffJoEAMZzZMUVlKm_kAtC3ApaeFh98jJCZA1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"6da9d22f9b444888bc6fdcc6c4fdcba3"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

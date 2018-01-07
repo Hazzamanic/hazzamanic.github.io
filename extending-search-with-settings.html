@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Extending Search with Settings</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/extending-search-with-settings?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Nov 25, 2013</div>     
+	
+
+<h1>Extending Search with Settings</h1>
+    
+    <p>This post will look into extending some core features of Orchard with custom settings. In this example, we will extend the default search with a setting to change the default display to use for search results. By default the search uses the Summary display view. This is fine in most situations, but Summary view is baked into some of our modules and we needed to be able to use a different view for the Search results.</p>
+
+<p>So the first thing we need to do is create a module. We will use the code generation features provided by Orchard. Head to the dashboard and enable Code Generation. To use Code Generation, you need to fire up the Orchard command line application. This is located in \src\Orchard.Web\bin and called orchard.exe. We are going to create a module called Mod.Search with the following command:</p>
+
+<blockquote>
+<p>&nbsp;<em>codegen module Mod.Search</em></p>
+</blockquote>
+
+<p>You can go ahead and add this to your solution. We now need to change how the search displays content. This could be done by directly editing the source code but this can present problems updating in the future and is generally a bad practise. So instead we will just overwrite the controller with our own. To do this, first we will create a folder in our module called Controllers, copy the SearchController from Orchard.Search and paste it into our own module, changing the namespace etc. to your own. To make Orchard use our controller instead of the original we will simply create a route with a higher priority and point it to our controller instead of the original one. So create a Routes.cs file in the root of our module with the following route:</p>
+
+<pre>public IEnumberable&lt;RouteDescriptor&gt; GetRoutes()
+{
+ yield return
+  new RouteDescriptor
+  {
+   Priority = 100,
+   Route = new Route(
+    “Search”,
+    new RoutevalueDictionary() {
+     {“area”, “Mod.Search”},
+     {“controller”, “search”},
+     {“action”, “index”}
+    },
+    null,
+    new RouteValueDictionary {
+     {“area”, “Mod.Search”}
+    },
+    new MvcRouteHandler()
+   )
+  };
+ yield break;
+}
+</pre>
+
+<p>Now we need to change what display is used in our controller. This is controlled by the following line:</p>
+
+<pre>var foundItems = _contentManager.GetMany&lt;IContent&gt;(foundIds, VersionOptions.Published, new QueryHints()).ToList();
+foreach (var contentItem in foundItems)
+{
+ list.Add(_contentManager.BuildDisplay(contentItem, "SummaryItem"));
+}
+searchHits.TotalItemCount -= foundIds.Count() - foundItems.Count();</pre>
+
+<p>So by default it uses the "Summary" view. We could now change that to whatever view we want, but we may want to have a different display view later. To give us this flexibility, we will create a site scope setting for it.</p>
+
+<p>"Site" is actually a content type, so attaching settings to it is very easy. We will use the excellent code generation features provided by Szmyd. This module is on the gallery and called Code Generation Extensions. Once you have installed this module, we can use it to generate all the bits and bobs we need for our site settings.</p>
+
+<p>Open the Orchard command line again and then type the following command:</p>
+
+<blockquote>
+<p>&nbsp;<em>codegen part Mod.Search SearchSiteSettings /Properties:DisplayType:string /AttachTo:Site</em></p>
+</blockquote>
+
+<p>This should have created the handler, driver, models and views. Next on the list of things to do is to create the migrations that will turn our models into tables in the database. You can write all this migrations code into the Migrations.cs file itself, but I tend to break it up into separate sections so I can keep track of the migrations more easily. We will also need to set a default value, for our display type. Orchard does appear to have this functionality with the .WithDefault() function but this didn't seem to work for me so we will write an update feature to manually set the value ourselves.</p>
+
+<p>Firstly, let's create a folder called MigrationTasks in our module and add a new class to it called SearchSettings. The class will be an internal class because we don't want any silly people to come along and try to use it somewhere else. So the code is as follows.</p>
+
+<pre>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Orchard.ContentManagement;
+using Orchard.Data.Migration.Schema;
+using Mod.Search.Models;
+
+namespace Mod.Search.MigrationTasks
+{
+    internal static class SearchSettings
+    {
+        internal static string SearchSiteSettingsRecord = typeof(SearchSiteSettingsRecord).Name;
+
+        /// &lt;summary&gt;
+        /// Creates the search settings record.
+        /// &lt;/summary&gt;
+        /// &lt;param name="schemaBuilder"&gt;The schema builder.&lt;/param&gt;
+        internal static void CreateSearchSettingsRecord(SchemaBuilder schemaBuilder)
+        {
+            schemaBuilder.CreateTable(SearchSiteSettingsRecord, table =&gt;
+                table
+                    .ContentPartRecord()
+                    .Column&lt;string&gt;("DisplayType", c =&gt; c.WithDefault("Summary")));
+        }
+
+        /// &lt;summary&gt;
+        /// Sets the default display type for search to "Summary"
+        /// &lt;/summary&gt;
+        /// &lt;param name="schemaBuilder"&gt;The Work Context&lt;/param&gt;
+        internal static void SetDefaultValueForSettings(Orchard.WorkContext workContext)
+        {
+            var settings = workContext.CurrentSite.As&lt;Models.SearchSiteSettings&gt;();
+            settings.DisplayType = "Summary";
+        }
+    }
+}</pre>
+
+<p>This creates the table in the database then will set the value in this table to Summary. Now we just need to create the actual migrations file and we should have a table.</p>
+
+<pre>private Work&lt;WorkContext&gt; workContext;
+
+public Migrations(Work&lt;WorkContext&gt; workContext)
+{
+ this.workContext = workContext;
+}
+
+public int Create()
+{
+ MigrationTasks.SearchSettings.CreateSearchSettingsRecord(this.SchemaBuilder);
+
+ return 1;
+}
+
+public int UpdateFrom1()
+{
+ MigrationTasks.SearchSettings.SetDefaultValueForSettings(this.workContext.Value);
+
+ return 2;
+}</pre>
+
+<p>An interesting thing to note here is the use of Work&lt;T&gt;. This basically lets us inject dependencies that are appropriate to the current requests context.</p>
+
+<p>Next we need to actually make use of this setting and inject it into the search controller. So let's create a variable at the top of the Index method called searchSettings to retrieve the search setting.</p>
+
+<pre>public ActionResult Index(PagerParameters pagerParameters, string q = "")
+{
+ var searchSettings = Services.WorkContext.CurrentSite.As&lt;Models.SearchSiteSettings&gt;();
+ var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
+ var searchSettingPart = Services.WorkContext.CurrentSite.As&lt;SearchSettingsPart&gt;();</pre>
+
+<p>Then use this instead of the default.</p>
+
+<pre>var foundItems = _contentManager.GetMany&lt;IContent&gt;(foundIds, VersionOptions.Published, new QueryHints()).ToList();
+foreach (var contentItem in foundItems)
+{
+ list.Add(_contentManager.BuildDisplay(contentItem, searchSettings.DisplayType)); //"SummaryItem"));
+}
+searchHits.TotalItemCount -= foundIds.Count() - foundItems.Count();</pre>
+
+<p>All that is left is to clean it all up a little. Our module depends on Orchard.Search so let's edit the Module.txt.</p>
+
+<p>IMAGE!!!!</p>
+
+<p>We could leave it here but currently our site settings are mixed into the general settings section. It would make sense to have them in the same section as the other search settings. To achieve this we just need to edit the driver a little.</p>
+
+<pre>protected override DriverResult Editor(SearchSiteSettings part, dynamic shapeHelper)
+{
+ return ContentShape("Parts_SearchSiteSettings",
+     () =&gt; shapeHelper.EditorTemplate(
+      TemplateName: TemplateName,
+      Model: part,
+      Prefix: Prefix))
+      .OnGroup("search");
+}</pre>
+
+<p>So we have just added .OnGroup("search"); to the end of the editor shape. This group is defined by the Orchard.Search module so we don't need to explicitly do it ourselves. However, if you did want to define your own group, it is done in the handler like so.</p>
+
+<pre>protected override void GetItemMetadata(GetContentItemMetadataContext context)
+{
+ if (context.ContentItem.ContentType != "Site")
+  return;
+ base.GetItemMetadata(context);
+ context.Metadata.EditorGroupInfo.Add(new GroupInfo(T("Search")));
+}</pre>
+
+<p>And there we have it, site settings to extend a core Orchard feature. Part of this code was written by Matthew Green, and you can find more of his awesome work at <a href="http://www.breakoutdeveloper.com/">http://www.breakoutdeveloper.com/</a></p>
+
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fextending-search-with-settings" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="20">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="RpzjFGSavaU3TcfAmZ6Odtn24ywVAwKHYqRXNdIEE1SIhAkWlaShGO5fvz1AqaN1rThxV8nMWcwmd3VqYxYVw2yQ8GabzXnRG-c9Eb7lD1A1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"4da3883638b6492bbb413e42e8d0079e"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Using MoreLikeThis in Lucene to displayed related content in Orchard CMS</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/using-morelikethis-in-lucene-to-displayed-related-content-in-orchard-cms?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Feb 2, 2017</div>     
+	
+
+<h1>Using MoreLikeThis in Lucene to displayed related content in Orchard CMS</h1>
+    
+    Lucene has an awesome class for finding related content called MoreLikeThis. It is what powers the Related section on Stack Overflow, and many more sites I'm sure. Aaron Johnson has an excellent overview of how it works on his [blog][1]. It is a bit wordy but well worth a read. Lucene.NET is a port of Lucene for .NET and (generally) examples written for Lucene (java) work just fine when converted to .NET. 
+
+So here's the code to find related content. You'll need to grab the [Lucene.Contrib][2] package from nuget too. 
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Lucene.Models;
+    using Lucene.Net.Index;
+    using Lucene.Net.Search;
+    using Lucene.Net.Search.Similar;
+    using Lucene.Net.Store;
+    using Orchard;
+    using Orchard.Environment.Configuration;
+    using Orchard.FileSystems.AppData;
+    using Orchard.Indexing;
+    using Directory = Lucene.Net.Store.Directory;
+    using Lucene.Net.Analysis;
+    using Lucene.Services;
+    using System.Globalization;
+    
+    namespace NamespacesFtw {
+        public interface IRelatedService : IDependency {
+            IEnumerable<isearchhit> GetRelatedItems(int id);
+            IEnumerable<isearchhit> GetRelatedItems(int id, RelatedContentContext context);
+        }
+    
+        public class RelatedService : IRelatedService {
+            private readonly IAppDataFolder _appDataFolder;
+            private readonly string _basePath;
+            private readonly IIndexManager _indexManager;
+            private readonly ILuceneAnalyzerProvider _analyzerProvider;
+    
+            public RelatedService(IAppDataFolder appDataFolder, ShellSettings shellSettings, IIndexManager indexManager, ILuceneAnalyzerProvider analyzerProvider) {
+                _appDataFolder = appDataFolder;
+                _indexManager = indexManager;
+                _analyzerProvider = analyzerProvider;
+                _basePath = _appDataFolder.Combine("Sites", shellSettings.Name, "Indexes");
+            }
+    
+            private ISearchBuilder Search(string index) {
+                return _indexManager.HasIndexProvider()
+                    ? _indexManager.GetSearchIndexProvider().CreateSearchBuilder(index)
+                    : new NullSearchBuilder();
+            }
+    
+            public IEnumerable<isearchhit> GetRelatedItems(int id, RelatedContentContext context) {
+                IndexReader reader = IndexReader.Open(GetDirectory(context.Index), true);
+                var indexSearcher = new IndexSearcher(reader);
+                var analyzer = _analyzerProvider.GetAnalyzer(context.Index);
+    
+                var mlt = new MoreLikeThis(reader) {Boost = true, MinTermFreq = 1, Analyzer = analyzer, MinDocFreq = 1};
+                if (context.FieldNames.Length &gt; 0) {
+                    mlt.SetFieldNames(context.FieldNames);
+                }
+    
+                var docid = GetDocumentId(id, indexSearcher);
+                Filter filter;
+    
+                BooleanQuery query = (BooleanQuery) mlt.Like(docid);
+    
+                if (!String.IsNullOrWhiteSpace(context.ContentType)) {
+                    var contentTypeQuery = new TermQuery(new Term("type", context.ContentType));
+                    query.Add(new BooleanClause(contentTypeQuery, Occur.MUST));
+                }
+    
+                // exclude same doc
+                var exclude = new TermQuery(new Term("id", id.ToString()));
+                query.Add(new BooleanClause(exclude, Occur.MUST_NOT));
+    
+                TopDocs simDocs = indexSearcher.Search(query, context.Count);
+                var results = simDocs.ScoreDocs
+                    .Select(scoreDoc =&gt; new LuceneSearchHit(indexSearcher.Doc(scoreDoc.Doc), scoreDoc.Score));
+    
+                return results;
+            }
+    
+            protected virtual Directory GetDirectory(string indexName) {
+                var directoryInfo = new DirectoryInfo(_appDataFolder.MapPath(_appDataFolder.Combine(_basePath, indexName)));
+                return FSDirectory.Open(directoryInfo);
+            }
+    
+            public int GetDocumentId(int contentItemId, IndexSearcher searcher) {
+                var query = new TermQuery(new Term("id", contentItemId.ToString(CultureInfo.InvariantCulture)));
+                var hits = searcher.Search(query, 1);
+                return hits.ScoreDocs.Length &gt; 0 ? hits.ScoreDocs[0].Doc : 0;
+            }
+    
+            public IEnumerable<isearchhit> GetRelatedItems(int id) {
+                return GetRelatedItems(id, new RelatedContentContext());
+            }
+        }
+    }
+
+I've included all the usings because I like to copy + paste from other blogs, not mess with usings! Oh and here is some lame class I created for handling the configuration stuffs...
+
+    public class RelatedContentContext {
+        public string[] FieldNames { get; set; } = new string[] { "title", "body", "tags" };
+        public string ContentType { get; set; }
+        public int Count { get; set; } = 5;
+        public string Index { get; set; } = "search";
+    }
+
+No usings for you here.
+
+Naturally, I ran into a few issues. It appears that by default Lucene.NET does not use all fields if no fields are specified, but it actually just uses the "contents" field. Which I didn't have. It also requires the MinTermFreq and MinDocFreq to be set explicitly even though they have defaults. Another issue is that MoreLikeThis needs Term Vectors. Well, it can build them on the fly, but then it requires the fields to be stored in the index. Unfortunately, Orchard neither stores (it does have the option in the api to set a indexed field to be stored but very few actually are set) or builds the term vectors. To get around this I have overridden the default Lucene implementation with my own that simply adds the term vectors in. 
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using Lucene.Net.Documents;
+    using Lucene.Net.Index;
+    using Lucene.Services;
+    using Orchard;
+    using Orchard.Environment.Configuration;
+    using Orchard.Environment.Extensions;
+    using Orchard.FileSystems.AppData;
+    using Orchard.Indexing;
+    using Orchard.Logging;
+    
+    namespace NamespacesFtw {
+        [OrchardSuppressDependency("Lucene.Services.LuceneIndexProvider")]
+        public class LuceneIndexProvider : Lucene.Services.LuceneIndexProvider, IIndexProvider {
+            private readonly ILuceneAnalyzerProvider _analyzerProvider;
+            public LuceneIndexProvider(IAppDataFolder appDataFolder, ShellSettings shellSettings, ILuceneAnalyzerProvider analyzerProvider) 
+                : base(appDataFolder, shellSettings, analyzerProvider) {
+                _analyzerProvider = analyzerProvider;
+            }
+    
+            public new void Store(string indexName, IDocumentIndex indexDocument) {
+                Store(indexName, new[] { (LuceneDocumentIndexTermVector)indexDocument });
+            }
+    
+            public new void Store(string indexName, IEnumerable<idocumentindex> indexDocuments) {
+                Store(indexName, indexDocuments.Cast<lucenedocumentindextermvector>());
+            }
+    
+            public void Store(string indexName, IEnumerable<lucenedocumentindextermvector> indexDocuments) {
+                indexDocuments = indexDocuments.ToArray();
+    
+                if (!indexDocuments.Any()) {
+                    return;
+                }
+    
+                // Remove any previous document for these content items
+                Delete(indexName, indexDocuments.Select(i =&gt; i.ContentItemId));
+    
+                using (var writer = new IndexWriter(GetDirectory(indexName), _analyzerProvider.GetAnalyzer(indexName), false, IndexWriter.MaxFieldLength.UNLIMITED)) {
+                    foreach (var indexDocument in indexDocuments) {
+                        var doc = CreateDocument(indexDocument);
+    
+                        writer.AddDocument(doc);
+                        Logger.Debug("Document [{0}] indexed", indexDocument.ContentItemId);
+                    }
+                }
+            }
+    
+            public new IDocumentIndex New(int documentId) {
+                return new LuceneDocumentIndexTermVector(documentId, T);
+            }
+    
+            private static Document CreateDocument(LuceneDocumentIndexTermVector indexDocument) {
+                var doc = new Document();
+    
+                indexDocument.PrepareForIndexing();
+                foreach (var field in indexDocument.Fields) {
+                    doc.Add(field);
+                }
+                return doc;
+            }
+        }
+    
+        [OrchardSuppressDependency("Lucene.Models.LuceneDocumentIndex")]
+        public class LuceneDocumentIndexTermVector : IDocumentIndex {
+    
+            public List<abstractfield> Fields { get; private set; }
+    
+            private string _name;
+            private string  _stringValue;
+            private int _intValue;
+            private double _doubleValue;
+            private bool _analyze;
+            private bool _store;
+            private bool _removeTags;
+            private TypeCode _typeCode;
+    
+            public int ContentItemId { get; private set; }
+    
+            public LuceneDocumentIndexTermVector(int documentId, Localizer t) {
+                Fields = new List<abstractfield>();
+                SetContentItemId(documentId);
+                IsDirty = false;
+                
+                _typeCode = TypeCode.Empty;
+                T = t;
+            }
+    
+            public Localizer T { get; set; }
+    
+            public bool IsDirty { get; private set; }
+    
+            public IDocumentIndex Add(string name, string value) {
+                PrepareForIndexing();
+                _name = name;
+                _stringValue = value;
+                _typeCode = TypeCode.String;
+                IsDirty = true;
+                return this;
+            }
+    
+            public IDocumentIndex Add(string name, DateTime value) {
+                return Add(name, DateTools.DateToString(value, DateTools.Resolution.MILLISECOND));
+            }
+    
+            public IDocumentIndex Add(string name, int value) {
+                PrepareForIndexing();
+                _name = name;
+                _intValue = value;
+                _typeCode = TypeCode.Int32;
+                IsDirty = true;
+                return this;
+            }
+    
+            public IDocumentIndex Add(string name, bool value) {
+                return Add(name, value ? 1 : 0);
+            }
+    
+            public IDocumentIndex Add(string name, double value) {
+                PrepareForIndexing();
+                _name = name;
+                _doubleValue = value;
+                _typeCode = TypeCode.Single;
+                IsDirty = true;
+                return this;
+            }
+    
+            public IDocumentIndex Add(string name, object value) {
+                return Add(name, value.ToString());
+            }
+    
+            public IDocumentIndex RemoveTags() {
+                _removeTags = true;
+                return this;
+            }
+    
+            public IDocumentIndex Store() {
+                _store = true;
+                return this;
+            }
+    
+            public IDocumentIndex Analyze() {
+                _analyze = true;
+                return this;
+            }
+    
+            public IDocumentIndex SetContentItemId(int contentItemId) {
+                ContentItemId = contentItemId;
+                Fields.Add(new Field("id", contentItemId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                return this;
+            }
+    
+            public void PrepareForIndexing() {
+                switch(_typeCode) {
+                    case TypeCode.String:
+                        if(_removeTags) {
+                            _stringValue = _stringValue.RemoveTags(true);
+                        }
+                        var f = new Field(_name, _stringValue ?? String.Empty,
+                            _store ? Field.Store.YES : Field.Store.NO,
+                            _analyze ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED, Field.TermVector.YES);
+                        Fields.Add(f);
+                        break;
+                    case TypeCode.Int32:
+                        var nf = new NumericField(_name,
+                            _store ? Field.Store.YES : Field.Store.NO,
+                            true).SetIntValue(_intValue);
+                        Fields.Add(nf);
+                        break;
+                    case TypeCode.Single:
+                        Fields.Add(new NumericField(_name,
+                            _store ? Field.Store.YES : Field.Store.NO,
+                            true).SetDoubleValue(_doubleValue));
+                        break;
+                    case TypeCode.Empty:
+                        break;
+                    default:
+                        throw new OrchardException(T("Unexpected index type"));
+                }
+    
+                _removeTags = false;
+                _analyze = false;
+                _store = false;
+                _typeCode = TypeCode.Empty;
+            }
+        }
+    }
+
+So now we have a bunch of ISearchHits which we can use to get our content items.
+
+    var related = _relatedSerive.GetRelatedItems(contentItem.Id, context);
+    var contentItems = _contentManger.GetMany<icontent>(related.Select(e =&gt; e.ContentItemId), VersionOptions.Published, QueryHints.Empty);
+
+Then just display them however you please!
+
+I am currently developing the module with extra settings etc. so that it's a little more usable in the real world.
+
+**Update (07/09/2017):** I didn't really develop the module much more but I the code is now on [GitHub][3] anyway and you can see it working on my [travel blog][4].
+
+
+  [1]: http://cephas.net/blog/2008/03/30/how-morelikethis-works-in-lucene/
+  [2]: https://www.nuget.org/packages/Lucene.Net.Contrib/3.0.3
+  [3]: https://github.com/Hazzamanic/Hazza.RelatedContent
+  [4]: http://travellingwrong.com/
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/lucene">lucene</a>, <a href="/Tags/MoreLikeThis">MoreLikeThis</a>, <a href="/Tags/Orchard">Orchard</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fusing-morelikethis-in-lucene-to-displayed-related-content-in-orchard-cms" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="62">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="7ocubmCeNKFZ8CvHkND5riHqOFc3l_g0XbeS0ZwPFgeOjSwVhporgG0AWJjKsmqCU393wA7Zo9O7KlV8bvJIKo-kHoDnZoPWHwuHXQa9yWg1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</icontent></abstractfield></abstractfield></lucenedocumentindextermvector></lucenedocumentindextermvector></idocumentindex></isearchhit></isearchhit></isearchhit></isearchhit></article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"7cbd773239874c9fabbc516ec0e9eca5"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Christmas-ifying Orchard</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/blog/christmas-ifying-orchard?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Dec 12, 2013</div>     
+	
+
+<h1>Christmas-ifying Orchard</h1>
+    
+    <p>So it is Christmas, a time to be merry, break out into song for no good reason and drink copious amounts of sickingly warm wine. But it is also when super nerds can make their blogs...snow! Exciting, I know. You should hopefully be able to see my blog snowing at the top. Not very impressively, and although I am no expert, I'm fairly certain snow doesn't fall in perfect circles but hey, I'm lazy. I thought I would write a quick post on how I went about making this pathetic little weather system.</p>
+
+<p>I decided to make it as a widget so that I didn't have to mess around in the theme. It will also make it easy to remove the snow later. So let's go ahead and create a module using the command line:</p>
+
+<pre>codegen module Hazza.Christmas</pre>
+
+<p>Next we'll create a part that will be attached to a widget and create our snow. Again we will use the command line because nobody can be bothered to remember how to write Orchard parts. You will need the exceptional Code Generation Extensions module by <a href="http://www.szmyd.com.pl/blog">http://www.szmyd.com.pl/blog</a></p>
+
+<pre>codegen part Hazza.Christmas ChristmasPart</pre>
+
+<p>We are just going to create a blank part with no properties. If you wanted to add your properties from the command line, you can! Check it out:</p>
+
+<pre>codegen part Hazza.Christmas ChristmasPart /Properties:Santa:string,Milk:bool,Cookies:int</pre>
+
+<p>Anyway, getting sidetracked there. We now have a part, but what we really want is a widget. We'll create a widget in our migrations. The code will look like this:</p>
+
+<pre>public int Create() {
+ SchemaBuilder.CreateTable("ChristmasPartRecord", table =&gt; table
+  .ContentPartRecord()
+ );
+
+ ContentDefinitionManager.AlterPartDefinition("ChristmasPart", builder =&gt; builder.Attachable());
+ return 1;
+}
+
+public int UpdateFrom1()
+{
+ ContentDefinitionManager.AlterTypeDefinition("ChristmasWidget", cfg =&gt; cfg
+  .WithPart("ChristmasPart")
+  .WithPart("WidgetPart")
+  .WithPart("CommonPart")
+  .WithSetting("Stereotype", "Widget"));
+
+ return 2; 
+}</pre>
+
+<p>Basically we are creating an empty part (using the .ContentPartRecord() setting, don't forget it when creating parts!) and making it attachable in the Create() method. We are then running a new migration and creating a new Content Type called "ChristmasWidget". The two important things we are doing to our Content Type to make it a widget is attaching the WidgetPart and setting the Stereotype of our Content Type to "Widget". This lets Orchard know that it should show up in the Widgets section. And probably some other important stuff.</p>
+
+<p>Okay so the snow, I decided not to try to explain the JavaScript code on here, but in comments within the code itself. <a href="https://hazzachristmas.codeplex.com/">Here</a> is a link to the file on CodePlex where you can have a look through it. Can also download the entire source code there.</p>
+
+<p>There are few little bits and bobs in the CSS. You may have to adapt the module a little for your theme. I'm pretty much using the excellent Wise Words theme, though I think it also worked with TheThemeMachine. I used !important (dangerous, I know) so that I didn't have to mess around in the theme at all. Always nice</p>
+
+<p>So I think that is pretty much it. I doubt I will see many snowy Orchard blogs out there, but would be cool to let me know if you did use it!</p>
+
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>, <a href="/Tags/Widgets">Widgets</a>, <a href="/Tags/Javascript">Javascript</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fblog%2Fchristmas-ifying-orchard" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="17">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="08mQoQ5NffyWjZXpIdfRGOiTked8SbnUJhdcr40pUdgicn7-HM8PsznsWRstR5X9PWKMg9j5xQ6eNEPinpRaMUsifpyVTCbq2Syo9ACX1Aw1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"a02ba4f050c641308ae6fc0cbaf7b376"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Building a Visual Studio Extension</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/building-a-visual-studio-extension?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Mar 22, 2015</div>     
+	
+
+<h1>Building a Visual Studio Extension</h1>
+    
+    In late 2014 I got sick of writing [parts][1] for Orchard. Like, super bored. Previously I had used [Piotr's][2] exceptional [Code Generation Extensions][3] module for Orchard to take away some of that hassle. However, I never much liked having to go into the command line. I always wrote the commands wrong or had to go and look up the syntax because it had to be just right else it would fail. I'm just command line retarded. It also required a reload in Visual Studio, which, with my PC at the time, was an absolute nightmare. And, unfortunately, it has never been updated to work with 'The Shift', so does not generate the latest, sexiest syntax. I have also been hanging around on the side lines of the Orchard community for a while now, answering a few questions here and there, but never really getting involved. So I thought, why not finally contribute something worthwhile?
+
+So, if you didn't know, I released [Orchardizer][4] a little while back, it's had a few downloads. And I've found it very helpful, so it has at least one happy customer. I originally planned to write this post as soon as I had finished the extension but being the lazy bastard that I am, six months have passed. 
+
+Before getting started on the extension I had a little look into what I was getting myself into. I read quite a few articles that talked about how simple it was to build an extension for Visual Studio. So, with my spirits high, I dived in.  
+
+I want to say that I enjoyed it. I want to write an upbeat blog post about how awesome it all was and show everyone what a great coder I am, how up for a challenge I am. Convince you guys the only thing you should do is build your own Visual Studio extension. But really I just remember being exceedingly frustrated by EnvDTE (the assembly-wrapped COM library containing the objects and members for Visual Studio core automation) development. I wanted this to be simple. This was my spare time, I didn't want to have to trawl the internet looking for some documentation or example of how to achieve something that seemed so simple but EnvDTE turned into some convoluted ridiculous mess. I know using famously overused quotes is pretty lame but...
+
+&gt; I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it - *Bill Gates*
+
+I'm outrageously lazy. And EnvDTE made being me difficult. So as I continued plucking away, I read as much as I could, as many blog posts as I could find on the subject. I remember reading one blogger who mentioned a talk by Mads Kristensen that aimed to remove the stigma surround Visual Studio extension development, how it was no longer just for the big boys, the staff working at Jetbrains or the Microsoft employees of the world. But for all this talk, these bloggers all copied code from existing open source extensions. And who could blame them? The underlying COM stuff is ugly and dealing with the code model that EnvDTE gives you access to is fiddly; limited in its ability to emit code or glean information from the code; buggy; and unintuitive.
+
+Another problem I had was the total lack of support from the online community, not that I blame them, I guess no one really cares about Visual Studio development. It's for the big boys after all. The multitude of queries I posted all went unanswered. These were mostly regarding improving the stability of my code or its performance, situations where an expert would have been a godsend to improve my hacky-but-functional code.
+
+Was it all bad? Of course not. When I wasn't dealing with Visual Studio and just writing pure C#-y stuff I was happy again. And I admit I wasn't entirely truthful when I said my online queries went unanswered. Several times I got the unhelpful comment: use Roslyn.
+
+So, Roslyn. I didn't use Roslyn because Roslyn isn't really out. It's in the Visual Studio 2015 preview. But I did have a play with it. And my god it is nice. Currently, VS has access to the compiler. Obviously. You and I, little developers wanting to build something cool for VS, get the file code model (EnvDTE.Project.CodeModel). Which sucks. But, you might say, there are cool extensions for VS, like [ReSharper][5]! Ha, they don't use the code model, they have a Roslyn-esque model under the hood that builds the syntax trees for offering all their awesome refactoring's etc. So what will change with Roslyn? You, I and Visual Studio will all be using the same API to make VS do its sexy thang. And that is what will really make building Visual Studio extensions for the little fish in the pond too.
+
+
+  [1]: http://docs.orchardproject.net/Documentation/Writing-a-content-part
+  [2]: http://www.szmyd.com.pl/
+  [3]: https://gallery.orchardproject.net/List/Modules/Orchard.Module.Szmyd.CodeGeneration
+  [4]: http://arkleseizure.net/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers
+  [5]: http://www.jetbrains.com/resharper/
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Visual%20Studio">Visual Studio</a>, <a href="/Tags/EnvDTE">EnvDTE</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fbuilding-a-visual-studio-extension" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="33">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="chd1OwkG7PAm_UqvPv7pY3Si3_0fa3Rvn5ltHhjy6QaYNBwdTTSNuoC41lmpyOJHbBpbdehbqNKgOAUBmxelS8qT7kAvVmfu24N-3VeudA01"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"6f461bf72c9d47b98d3eadd607dce5e8"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="en-US" class="static detail-blog-post contents"><head> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-110551398-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110551398-1');
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6503574517671698",
+    enable_page_level_ads: true
+  });
+</script>
+    <meta charset="utf-8">
+    <title>Arkleseizure - Next/Previous Blog Post Buttons in Orchard</title> 
+    <link href="/Modules/Hazza.Christmas/Styles/snow.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/socialicons.css" rel="stylesheet" type="text/css">
+<link href="/Themes/WiseWords/Styles/theme.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="/Themes/WiseWords/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta content="Orchard" name="generator">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="/next-previous-blog-post-buttons-in-orchard?amp=1" rel="amphtml">
+<link href="/modules/orchard.themes/Content/orchard.ico" rel="shortcut icon" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Blog" href="/rss?containerid=12">
+
+    <script>(function(d){d.className="dyn"+d.className.substring(6,d.className.length);})(document.documentElement);</script> 
+</head> 
+<body>
+
+
+
+<canvas id="flakes" height="300"></canvas>
+
+
+<!--  
+    #######################################################################################
+
+    Some info for source code detectives:
+
+    * This website is powered by Orchard CMS (orchardproject.net)
+
+    * Theme designed and built by Shovel & Rake (shovelandrake.com)    
+
+    * Theme available for free download in the Orchard gallery (gallery.orchardproject.net)
+
+    Thanks for checking out my source :)
+
+    ####################################################################################### 
+
+--->
+
+<div class="container">
+
+	<div class="masthead clearfix">
+<div class="zone zone-logo">
+<article class="widget-logo widget-html-widget widget">
+    <h1>Arkleseizure</h1>
+</article></div>            
+        <div class="zone zone-navigation">
+
+
+<ul id="nav" class="nav ww-nav pull-right hidden-phone">   
+        
+        
+<li class="first"><a href="/">Home</a></li>
+<li><a href="/introducing-orchardizer-a-visual-studio-extension-for-orchard-developers">Orchardizer</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Orchard Modules</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/Hazza.RelatedContent">Related Content</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.CookieConsent">Cookie Consent</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.Twilio">Twilio</a></li>
+<li><a href="https://github.com/Hazzamanic/Mod.ClientSettings">Client Settings</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.Blogging">Blogging Extensions</a></li>
+<li><a href="https://github.com/Hazzamanic/Hazza.SiteInfo">Site Info</a></li>
+        </ul>
+</li>
+<li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Extensions</a>        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            
+<li><a href="https://github.com/Hazzamanic/SaveAs-For-Edge">SaveAs For Edge</a></li>
+        </ul>
+</li>
+</ul></div>
+	</div>
+
+	<hr>
+	
+
+
+	<div class="row main-content-row">
+        
+        <div class="offset3 span6">
+
+
+
+            <div class="zone zone-content">
+
+<article class="blog-post">
+<div class="published">Jan 26, 2017</div>     
+	
+
+<h1>Next/Previous Blog Post Buttons in Orchard</h1>
+    
+    So I'm currently building a little blog, nothing too fancy, but I wanted next and previous buttons, which don't come out of the box. First thing I did, like the good little developer that I am, was google it. I forgot to put "OrchardCMS" in the first time so just got a bunch of posts on Wordpress forums complaining that they couldn't add said buttons. Not particularly helpful. So I amended my query and what did I find? A module that called [Mod.NextPreviousItem][1], that I wrote back in 2013! Random. Anyway, so this module is old and more complicated than I needed for my simple next/previous blog post. So I stole a few lines of code and tada, next/previous buttons.
+
+I added a new driver for the blog post part to return my fancy new links.
+
+    using System.Linq;
+    using Orchard.Blogs.Models;
+    using Orchard.ContentManagement;
+    using Orchard.ContentManagement.Drivers;
+    using Orchard.Core.Common.Models;
+    
+    namespace Travail.Drivers {
+        public class BlogPostPartDriver : ContentPartDriver<blogpostpart> {
+            private readonly IContentManager _contentManager;
+    
+            public BlogPostPartDriver(IContentManager contentManager) {
+                _contentManager = contentManager;
+            }
+    
+            protected override DriverResult Display(BlogPostPart part, string displayType, dynamic shapeHelper) {
+                return ContentShape("Parts_NextPreviousBlogPost", () =&gt; {
+                    var createdDate = part.As<commonpart>().CreatedUtc;
+    
+                    var next = _contentManager.Query(VersionOptions.Published, "BlogPost")
+                        .Join<commonpartrecord>()
+                        .Where(cr =&gt; cr.Container.Id == part.BlogPart.Id)
+                        .Where(common =&gt; common.CreatedUtc &gt; createdDate)
+                        .OrderBy(cr =&gt; cr.CreatedUtc)
+                        .Slice(0, 1).FirstOrDefault();
+    
+                    var previous = _contentManager.Query(VersionOptions.Published, "BlogPost")
+                        .Join<commonpartrecord>()
+                        .Where(cr =&gt; cr.Container.Id == part.BlogPart.Id)
+                        .Where(common =&gt; common.CreatedUtc &lt; createdDate)
+                        .OrderByDescending(cr =&gt; cr.CreatedUtc)
+                        .Slice(0, 1).FirstOrDefault();
+    
+    
+                    return shapeHelper.Parts_NextPreviousBlogPost(Next: next, Previous: previous);
+                });
+            }
+        }
+    }
+
+I added this to my theme (naughty, I know) but you could add it to a module for better reusability. Next we just need a simple view called *Parts.NextPreviousBlogPost.cshtml* that you can pop into your Views folder.
+
+    @using Orchard.ContentManagement;
+    
+    @{
+        ContentItem next = Model.Next;
+        ContentItem previous = Model.Previous;
+    }
+    
+    <div class="clearfix">
+        @if (next != null) {
+            @Html.ItemDisplayLink("Up next: " + Html.ItemDisplayText(next), next, new { @class= "next-post"})
+        }
+        @if (previous != null) {
+            @Html.ItemDisplayLink("Previously: " + Html.ItemDisplayText(previous), previous, new { @class = "previous-post" })
+        }
+    </div>
+    <hr>
+
+And if you need it, a bit of css to make it look pwetty.
+
+    .next-post {
+        float: right;
+    }
+    
+    .previous-post {
+        float: left;
+    }
+
+When I wrote "and a bit of css to make it look pwetty", I didn't realise I had literally written two lines. Not very pretty at all. A bit pathetic really.
+
+Anyway, hope this helps!
+
+  [1]: https://modnextprevious.codeplex.com/
+
+    <p class="tags">
+        <span>Tags:</span>
+<a href="/Tags/Orchard">Orchard</a>    </p>
+
+
+
+
+
+<h2 class="comment-count">No Comments</h2>
+
+
+
+
+
+    <span id="comment-form-beacon"></span>
+<form action="/Comments/Comment/Create?ReturnUrl=http%3A%2F%2Famp.vcap.me%2Fnext-previous-blog-post-buttons-in-orchard" class="comment-form" method="post">
+<div class="edit-item">
+    <div class="edit-item-primary">
+            <div class="edit-item-content">
+                
+    <fieldset class="who">
+        <legend id="add-comment">Add a Comment</legend>
+        <ol>
+            <li>
+                <label for="Comments_Author">Name</label>
+                <input id="Comments_Author" name="Comments.Author" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_Email">Email</label>
+                <input id="Comments_Email" name="Comments.Email" type="text" value="">
+            </li>
+            <li>
+                <label for="Comments_SiteName">Url</label>
+                <input id="Comments_SiteName" name="Comments.SiteName" type="text" value="">
+            </li>
+        </ol>
+    </fieldset>
+
+<fieldset class="what">
+    <ol>
+        <li>
+            <label for="Comments_CommentText">Comment</label>
+            <textarea class="comment-text" cols="30" id="Comments_CommentText" name="Comments.CommentText" rows="10"></textarea>
+        </li>
+    </ol>
+    <input id="Comments_CommentedOn" name="Comments.CommentedOn" type="hidden" value="61">
+    <input id="Comments_RepliedOn" name="Comments.RepliedOn" type="hidden" value="">
+</fieldset>
+<fieldset>
+    <input id="CommonPart_ContainerId" name="CommonPart.ContainerId" type="hidden" value="">
+</fieldset>
+            </div>
+    </div>
+    <div class="edit-item-secondary group">
+            </div>
+</div>
+
+    <button class="primaryAction" type="submit">Submit Comment</button>
+<input name="__RequestVerificationToken" type="hidden" value="se5vxqAujRpE5mvSzE7b_MBQQgyqrQsXz6uC4N-LGV0klJlw96KdIfGEk1MJYAWdacUaf5G3HbXY5hoOZW8IFBiQqXKr-9apA2GQ-2W_FQE1"></form>
+
+<section class="media-library-picker-field media-library-picker-field-thumbnail">
+    <h3>Thumbnail</h3>
+</section>
+    
+</commonpartrecord></commonpartrecord></commonpart></blogpostpart></article></div>
+
+
+		    <div class="clearfix"></div>
+	    </div>
+
+	</div>
+
+
+
+
+
+
+	<hr>
+
+    <div class="row">
+        <div class="poweredBy span6 offset6">
+            <a href="http://orchardproject.net" target="_blank"> <img src="/Themes/WiseWords/Content/img/poweredByOrchard.png" alt="Wise Words"> </a>
+        </div>
+    </div>
+</div>  <!-- End Container -->
+<script src="/Modules/Hazza.Christmas/scripts/snow.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.Resources/scripts/jquery.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/bootstrap.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/tinynav.min.js" type="text/javascript"></script>
+<script src="/Themes/WiseWords/scripts/theme.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+        $('.comment-reply-button').click(function() {
+            var self = $(this);
+
+            var reply = $('#Comments_RepliedOn');
+            var currentReply = reply.val();
+
+            
+            if (currentReply && currentReply.length > 0) {
+                reply.val('');
+                $('#comment-form-beacon').after($('.comment-form'));
+            } else {
+                
+                var id = self.data('id');
+                reply.val(id);
+
+                
+                $('.comment-form').appendTo(self.parents('article').first());
+            }
+
+            
+            return false;
+        });
+
+
+
+    });
+//]]>
+</script>
+
+<script type="text/javascript">window.cookieconsent_options = {expiryDays: 365,}</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown","requestId":"f472d6852f43422580475d29bcc335d4"}
+</script>
+<script type="text/javascript" src="http://localhost:52774/c83c84fc61024de69407f15584571e06/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+
+</body></html>
